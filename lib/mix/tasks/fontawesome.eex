@@ -1,0 +1,138 @@
+defmodule FontAwesome do
+  @moduledoc """
+  <%= @intro %>
+
+  <%= @usage %>
+  """
+
+  use Phoenix.Component
+
+  defp svg(assigns) do
+    {styles, assigns} = Map.pop!(assigns, :styles)
+
+    {view_box, path} =
+      if map_size(styles) == 1 do
+        [%{view_box: view_box, path: path}] = Map.values(styles)
+        {view_box, path}
+      else
+        case {
+          is_map_key(styles, :brands),
+          is_map_key(styles, :regular),
+          is_map_key(styles, :solid)
+        } do
+          {true, true, false} ->
+            if assigns.brands do
+              {styles.brands.view_box, styles.brands.path}
+            else
+              {styles.regular.view_box, styles.regular.path}
+            end
+
+          {false, true, true} ->
+            if assigns.solid do
+              {styles.solid.view_box, styles.solid.path}
+            else
+              {styles.regular.view_box, styles.regular.path}
+            end
+
+          {true, false, true} ->
+            if assigns.brands do
+              {styles.brands.view_box, styles.brands.path}
+            else
+              {styles.solid.view_box, styles.solid.path}
+            end
+
+          {true, true, true} ->
+            case {assigns.brands, assigns.solid} do
+              {true, false} ->
+                {styles.brands.view_box, styles.brands.path}
+
+              {false, true} ->
+                {styles.solid.view_box, styles.solid.path}
+
+              {false, false} ->
+                {styles.regular.view_box, styles.regular.path}
+
+              {true, true} ->
+                raise ArgumentError, "expected either brands or solid, but got both."
+            end
+        end
+      end
+
+    assigns = assign(assigns, path: path, view_box: view_box)
+
+    ~H"""
+    <.do_svg view_box={@view_box} {@rest}>
+      <%%= {:safe, @path} %>
+    </.do_svg>
+    """
+  end
+
+  attr :view_box, :string, required: true
+  attr :rest, :global, default: %{"aria-hidden": true, fill: "currentColor"}
+  slot :inner_block, required: true
+
+  defp do_svg(assigns) do
+    ~H"""
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox={@view_box} {@rest}>
+      <%= @attribution %>
+      <%%= render_slot(@inner_block) %>
+    </svg>
+    """
+  end
+
+  <%= for {name, styles} <- @svgs do %>
+    @doc """
+    Renders the `<%= name |> String.trim_leading("_") |> String.replace("_", "-") %>` icon.
+
+    ## Examples
+
+    ```heex
+    <FontAwesome.<%= name %> />
+    <FontAwesome.<%= name %> class="h-4 w-4" /><%= case {is_map_key(styles, :brands), is_map_key(styles, :regular), is_map_key(styles, :solid)} do %>
+      <% {true, false, false} -> %>
+        ```
+        """
+
+      <% {false, true, false} -> %>
+        ```
+        """
+
+      <% {false, false, true} -> %>
+        ```
+        """
+
+      <% {true, true, false} -> %>
+        <FontAwesome.<%= name %> brands />
+        ```
+        """
+
+        attr :brands, :boolean, default: false
+      <% {false, true, true} -> %>
+        <FontAwesome.<%= name %> solid />
+        ```
+        """
+
+        attr :solid, :boolean, default: false
+      <% {true, false, true} -> %>
+        <FontAwesome.<%= name %> brands />
+        ```
+        """
+
+        attr :brands, :boolean, default: false
+      <% {true, true, true} -> %>
+        <FontAwesome.<%= name %> brands />
+        <FontAwesome.<%= name %> solid />
+        ```
+        """
+
+        attr :brands, :boolean, default: false
+        attr :solid, :boolean, default: false
+    <% end %>attr :rest, :global, include: ["fill"]
+
+    def <%= name %>(assigns) do
+      assigns
+      |> assign(styles: <%= inspect(styles, printable_limit: :infinity) %>)
+      |> svg()
+    end
+  <% end %>
+end

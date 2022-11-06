@@ -1,0 +1,26 @@
+# FontAwesome
+
+<%= @intro %>
+
+## Installation
+
+Add FontAwesome to your `mix.exs`:
+
+```elixir
+defp deps do
+  [
+    {:fontawesome, "~> 0.1.0"}
+  ]
+end
+```
+
+After that, run `mix deps.get`.
+
+<%= @usage %>
+
+The docs can be read at <https://hexdocs.pm/fontawesome>.
+
+This was inspired by the [Heroicons](https://hex.pm/packages/heroicons) library.
+Huge thanks to its [contributors](https://github.com/mveytsman/heroicons_elixir/graphs/contributors).
+
+This work was supported by [Webformix](https://www.webformix.com). Huge thanks to them.

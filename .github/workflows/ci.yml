@@ -1,0 +1,32 @@
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        otp: ['23.x', '24.x']
+        elixir: ['1.12', '1.14']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            deps
+            _build
+          key: |
+            ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-
+
+      - run: mix do deps.get, deps.compile
+        if: steps.cache.outputs.cache-hit != 'true'
+      - run: mix deps.unlock --check-unused
+      - run: mix compile --all-warnings --warnings-as-errors
+      - run: mix format --check-formatted
+      - run: mix test
