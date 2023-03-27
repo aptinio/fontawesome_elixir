@@ -13,7 +13,9 @@ defmodule FontAwesome.MixProject do
       source_url: "https://github.com/aptinio/fontawesome_elixir",
       docs: docs(),
       package: package(),
-      xref: [exclude: [:httpc, :public_key]]
+      xref: [exclude: [:httpc, :public_key]],
+      aliases: aliases(),
+      preferred_cli_env: [ci: :test]
     ]
   end
 
@@ -47,6 +49,17 @@ defmodule FontAwesome.MixProject do
       files: ~w[lib/fontawesome.ex LICENSE mix.exs README.md],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/aptinio/fontawesome_elixir"}
+    ]
+  end
+
+  defp aliases do
+    [
+      ci: [
+        "compile --force --warnings-as-errors --all-warnings",
+        "deps.unlock --check-unused",
+        "format --check-formatted",
+        "test --warnings-as-errors"
+      ]
     ]
   end
 end
