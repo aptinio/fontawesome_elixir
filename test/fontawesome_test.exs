@@ -60,7 +60,7 @@ defmodule FontAwesomeTest do
 
            * `brands` (`:boolean`) - Defaults to `false`.
            * `solid` (`:boolean`) - Defaults to `false`.
-           * `rest` (`:global`) - Supports all globals plus: `["fill"]`.
+           Global attributes are accepted.
            """
   end
 end
