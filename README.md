@@ -4,7 +4,7 @@
 used by millions of designers, developers, and content creators.
 
 This provides precompiled SVG icons from
-[Font Awesome Free 6.2.0](https://fontawesome.com/search?o=r&m=free).
+[Font Awesome Free 6.3.0](https://fontawesome.com/search?o=r&m=free).
 
 ## Installation
 
