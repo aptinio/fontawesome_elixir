@@ -60,7 +60,7 @@ defmodule FontAwesomeTest do
 
            * `brands` (`:boolean`) - Defaults to `false`.
            * `solid` (`:boolean`) - Defaults to `false`.
-           Global attributes are accepted.
+           * Global attributes are accepted.
            """
   end
 end

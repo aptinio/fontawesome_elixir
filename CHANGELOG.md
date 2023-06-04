@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Relax dependency requirements
+
 ## [0.2.0] - 2023-03-27
 
 ### Changed
