@@ -5,6 +5,7 @@
 ### Changed
 
 - Relax dependency requirements
+- Update to [Font Awesome Free 6.4.0](https://github.com/FortAwesome/Font-Awesome/releases/tag/6.4.0)
 
 ## [0.2.0] - 2023-03-27
 

@@ -2,7 +2,7 @@ defmodule Mix.Tasks.Gen do
   use Mix.Task
   require Logger
 
-  @vsn "6.3.0"
+  @vsn "6.4.0"
 
   @intro """
   [Font Awesome](https://fontawesome.com) is the Internet's icon library and toolkit,
@@ -72,7 +72,7 @@ defmodule Mix.Tasks.Gen do
     |> Path.join("fontawesome.eex")
     |> Mix.Generator.copy_template(
       "lib/fontawesome.ex",
-      [attribution: attribution, intro: @intro, svgs: svgs, usage: @usage, vsn: @vsn],
+      [attribution: attribution, intro: @intro, svgs: svgs, usage: @usage],
       force: true
     )
 
@@ -80,7 +80,7 @@ defmodule Mix.Tasks.Gen do
     |> Path.join("README.eex")
     |> Mix.Generator.copy_template(
       "README.md",
-      [intro: @intro, usage: @usage, vsn: @vsn],
+      [intro: @intro, usage: @usage],
       force: true
     )
 
