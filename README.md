@@ -13,7 +13,7 @@ Add FontAwesome to your `mix.exs`:
 ```elixir
 defp deps do
   [
-    {:fontawesome, "~> 0.1.0"}
+    {:fontawesome, "~> 0.3"}
   ]
 end
 ```

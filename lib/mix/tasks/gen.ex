@@ -76,11 +76,18 @@ defmodule Mix.Tasks.Gen do
       force: true
     )
 
+    app_vsn =
+      :fontawesome
+      |> Application.spec(:vsn)
+      |> to_string()
+      |> Version.parse!()
+      |> then(fn %{major: major, minor: minor} -> "#{major}.#{minor}" end)
+
     __DIR__
     |> Path.join("README.eex")
     |> Mix.Generator.copy_template(
       "README.md",
-      [intro: @intro, usage: @usage],
+      [intro: @intro, app_vsn: app_vsn, usage: @usage],
       force: true
     )
 
