@@ -30,7 +30,7 @@ defmodule FontAwesome.MixProject do
   defp deps do
     [
       {:castore, ">= 0.0.0"},
-      {:ex_doc, "~> 0.29", only: :dev, runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:phoenix_live_view, "~> 0.18"}
     ]
   end
