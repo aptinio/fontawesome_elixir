@@ -131,7 +131,7 @@ defmodule FontAwesome do
 
     def <%= name %>(assigns) do
       assigns
-      |> assign(styles: <%= inspect(styles, printable_limit: :infinity) %>)
+      |> assign(styles: <%= inspect(styles, custom_options: [sort_maps: true], printable_limit: :infinity) %>)
       |> svg()
     end
   <% end %>
