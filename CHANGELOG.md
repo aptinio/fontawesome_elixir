@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased]
+## [0.3.1] - 2023-08-08
+
+### Changed
+
+- Update to [Font Awesome Free 6.4.2](https://github.com/FortAwesome/Font-Awesome/releases/tag/6.4.2)
 
 ## [0.3.0] - 2023-06-05
 

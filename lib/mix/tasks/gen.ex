@@ -2,7 +2,7 @@ defmodule Mix.Tasks.Gen do
   use Mix.Task
   require Logger
 
-  @vsn "6.4.0"
+  @vsn "6.4.2"
 
   @intro """
   [Font Awesome](https://fontawesome.com) is the Internet's icon library and toolkit,
