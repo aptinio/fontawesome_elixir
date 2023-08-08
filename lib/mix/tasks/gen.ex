@@ -95,49 +95,10 @@ defmodule Mix.Tasks.Gen do
   end
 
   defp fetch_body!(url) do
-    url = String.to_charlist(url)
     Logger.debug("Downloading Font Awesome from #{url}")
-
-    {:ok, _} = Application.ensure_all_started(:inets)
-    {:ok, _} = Application.ensure_all_started(:ssl)
-
-    if proxy = System.get_env("HTTP_PROXY") || System.get_env("http_proxy") do
-      Logger.debug("Using HTTP_PROXY: #{proxy}")
-      %{host: host, port: port} = URI.parse(proxy)
-      :httpc.set_options([{:proxy, {{String.to_charlist(host), port}, []}}])
-    end
-
-    # https://erlef.github.io/security-wg/secure_coding_and_deployment_hardening/inets
-    cacertfile = CAStore.file_path() |> String.to_charlist()
-
-    http_options = [
-      ssl: [
-        verify: :verify_peer,
-        cacertfile: cacertfile,
-        depth: 2,
-        customize_hostname_check: [
-          match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-        ],
-        versions: protocol_versions()
-      ]
-    ]
-
-    options = [body_format: :binary]
-
-    case :httpc.request(:get, {url, []}, http_options, options) do
-      {:ok, {{_, 200, _}, _headers, body}} ->
-        body
-
-      other ->
-        raise "couldn't fetch #{url}: #{inspect(other)}"
-    end
+    {:ok, _} = Application.ensure_all_started(:req)
+    Req.get!(url).body
   end
-
-  defp protocol_versions do
-    if otp_version() < 25, do: [:"tlsv1.2"], else: [:"tlsv1.2", :"tlsv1.3"]
-  end
-
-  defp otp_version, do: :erlang.system_info(:otp_release) |> List.to_integer()
 
   defp unzip!(zip, cwd) do
     case :zip.unzip(zip, cwd: to_charlist(cwd)) do

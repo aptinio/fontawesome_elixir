@@ -13,7 +13,6 @@ defmodule FontAwesome.MixProject do
       source_url: "https://github.com/aptinio/fontawesome_elixir",
       docs: docs(),
       package: package(),
-      xref: [exclude: [:httpc, :public_key]],
       aliases: aliases(),
       preferred_cli_env: [ci: :test]
     ]
@@ -29,9 +28,9 @@ defmodule FontAwesome.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:castore, ">= 0.0.0"},
+      {:phoenix_live_view, "~> 0.18"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:phoenix_live_view, "~> 0.18"}
+      {:req, ">= 0.0.0", only: [:dev, :test], runtime: false}
     ]
   end
 
